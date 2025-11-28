@@ -18,11 +18,17 @@ dotenv.config();
 // ---- Config ----
 const app = express();
 const PORT = process.env.PORT || 4000;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
+const FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
 // ---- Security & middleware ----
 app.use(helmet());
-app.use(cors({ origin: CORS_ORIGIN === "https://liftcare-frontend.vercel.app" ? true : CORS_ORIGIN, credentials: true }));
+app.use(cors({
+  origin: FRONTEND_ORIGIN,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+app.options("*", cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(
