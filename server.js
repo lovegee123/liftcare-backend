@@ -22,12 +22,7 @@ const FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
 // ---- Security & middleware ----
 app.use(helmet());
-app.use(cors({
-  origin: FRONTEND_ORIGIN,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(
