@@ -50,6 +50,5 @@ app.use('/auth', Routes);
 app.use('/api', main, contract, maintain, parts);
 app.listen(PORT, () => {
   console.log(`✅ LiftCare backend running at http://localhost:${PORT}`);
-  console.log(`CORS_ORIGIN: ${CORS_ORIGIN}`);
   console.log(`FRONTEND_ORIGIN: ${FRONTEND_ORIGIN}`);
 });
