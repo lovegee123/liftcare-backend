@@ -22,7 +22,7 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
 // ---- Security & middleware ----
 app.use(helmet());
-app.use(cors({ origin: CORS_ORIGIN === "http://liftcare-frontend.vercel.app/" ? true : CORS_ORIGIN, credentials: true }));
+app.use(cors({ origin: CORS_ORIGIN === "https://liftcare-frontend.vercel.app" ? true : CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(
@@ -33,6 +33,8 @@ app.use(
     legacyHeaders: false,
   })
 );
+
+app.options("*", cors());
 
 // ---- API (Protected) ----
 app.get("/", (req, res) => res.send("🚀 LiftCare API is running..."));
