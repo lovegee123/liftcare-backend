@@ -19,6 +19,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// ---- CORS Fix for Railway (Handle Preflight Properly) ----
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.sendStatus(200);
+});
+
 // ---- Security & middleware ----
 app.use(helmet());
 app.use(cors());
