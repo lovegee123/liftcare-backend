@@ -18,7 +18,6 @@ dotenv.config();
 // ---- Config ----
 const app = express();
 const PORT = process.env.PORT || 4000;
-const FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
 
 // ---- Security & middleware ----
 app.use(helmet());
