@@ -20,7 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // ถ้าอยากล็อก origin ทีหลัง ค่อยใช้ตัวนี้
-const FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:5173";
+const FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "*";
 
 // ---- Security & basic middleware ----
 app.use(helmet());
