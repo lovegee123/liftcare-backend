@@ -1,5 +1,6 @@
 // server.js (LiftCare Backend - Minimal CORS + Express)
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -33,28 +34,12 @@ app.use(
     legacyHeaders: false,
   })
 );
-
-// ---- CORS แบบตัดปัญหา: จัดการเองทีเดียวทุก request ----
-app.use((req, res, next) => {
-  // ชั่วคราว: เปิดทุก origin จะได้ไม่ติด CORS ระหว่าง demo
-  // ถ้าอยากล็อกทีหลัง เปลี่ยน "*" เป็น FRONTEND_ORIGIN ก็ได้
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization"
-  );
-
-  // จัดการ preflight ตรงนี้เลย ไม่ไปถึง router
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
+app.use(cors(
+  {
+    origin: FRONTEND_ORIGIN,
+    methods: ["GET", "POST", "PUT", "DELETE"],
   }
-
-  next();
-});
+))
 
 // ---- Health check ----
 app.get("/", (req, res) => {
