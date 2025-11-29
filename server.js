@@ -19,8 +19,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// ถ้าอยากล็อก origin ทีหลัง ค่อยใช้ตัวนี้
-const FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "*";
+// CORS Configuration - Clean the origin URL
+let FRONTEND_ORIGIN = process.env.CORS_ORIGIN || "*";
+// Remove trailing slash if present
+if (FRONTEND_ORIGIN !== "*" && FRONTEND_ORIGIN.endsWith("/")) {
+  FRONTEND_ORIGIN = FRONTEND_ORIGIN.slice(0, -1);
+}
 
 // ---- Security & basic middleware ----
 app.use(helmet());
@@ -34,12 +38,13 @@ app.use(
     legacyHeaders: false,
   })
 );
-app.use(cors(
-  {
+app.use(
+  cors({
     origin: FRONTEND_ORIGIN,
     methods: ["GET", "POST", "PUT", "DELETE"],
-  }
-))
+    credentials: true,
+  })
+);
 
 // ---- Health check ----
 app.get("/", (req, res) => {
